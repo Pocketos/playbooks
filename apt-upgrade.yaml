@@ -2,7 +2,7 @@
   tasks:
   - name: Update all installed packages using APT module
     become: true
-    become_user: "{{ diff_become_user }}"
+    become_user: {{ diff_become_user }}
     apt:
       name: '*'
       state: latest
@@ -12,11 +12,13 @@
 
   - name: Remove packages not needed anymore
     become: true
+    become_user: {{ diff_become_user }}
     apt:
       autoremove: yes
 
   - name: Reboot when packages were updated
     become: true
+    become_user: {{ diff_become_user }}
     reboot:
       post_reboot_delay: 60
     when: apt_update_status.changed
