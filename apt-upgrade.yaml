@@ -1,23 +1,9 @@
 - hosts: all
   become: yes
   tasks:
-  - name: print variables
-    debug:
-      msg: "Username: {{ diff_become_user }}"
-  - name: Update all installed packages using APT module
-    become: true
-    apt:
-      name: '*'
-      state: latest
-      update_cache: yes
-      only_upgrade: yes
-    register: apt_update_status
-  - name: Remove packages not needed anymore
-    become: true
-    apt:
-      autoremove: yes
-  - name: Reboot when packages were updated
-    become: true
-    reboot:
-      post_reboot_delay: 60
-    when: apt_update_status.changed
+    # Upgrade packages
+    - name: upgrade apt packages
+      become: true
+      apt:
+        upgrade: yes
+        update_cache: yes
