@@ -1,6 +1,8 @@
 ---
 
 - hosts: all
+  become: yes
+  become_user: $diff_become_user
   tasks:
   - name: Update and upgrade apt packages
     apt:
