@@ -1,10 +1,7 @@
-- hosts: all
-  become_user: "{{ diff_become_user }}"
+- hosts: "*"
   become: yes
   tasks:
-    # Upgrade packages
-    - name: upgrade apt packages
-      become: true
+    - name: apt
       apt:
-        upgrade: yes
+        upgrade: 'yes'
         update_cache: yes
