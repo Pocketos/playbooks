@@ -3,6 +3,7 @@
   become_user: root
   vars:
     ntfy_server_url: "https://notify.korkscrewgaming.com" # Replace with your ntfy server URL if self-hosting
+    ntfy_token: $(ntfy_token) # ntfy token secret
     ntfy_topic: "general" # Replace with your desired ntfy topic
     notification_message: "Updates have been applied and a reboot is necessary to complete the process on {{ ansible_hostname }} - {{ inventory_hostname }}"
   
