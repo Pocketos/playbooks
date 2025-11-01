@@ -1,0 +1,45 @@
+- hosts: "*"
+  become: true
+  become_user: root
+  vars:
+    ntfy_server_url: "https://notify.korkscrewgaming.com" # Replace with your ntfy server URL if self-hosting
+    ntfy_topic: "general" # Replace with your desired ntfy topic
+    notification_message: "Updates have been applied and a reboot is necessary to complete the process on {{ ansible_hostname }} - {{ inventory_hostname }}"
+  
+  tasks:
+    - name: Update (apt update)
+      apt:
+        update_cache: yes  
+            
+    - name: Upgrade (apt full-upgrade)
+      apt:
+        upgrade: full
+
+    - name: Remove (apt autoremove)
+      apt:
+        autoremove: yes
+
+    - name: Clean (apt autoclean)
+      apt:
+        autoclean: yes
+
+    - name: Check if reboot required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required_file    
+
+    - name: Send ntfy notification
+      when: reboot_required_file.stat.exists == true
+      ansible.builtin.uri:
+        url: "{{ ntfy_server_url }}/{{ ntfy_topic }}"
+        method: POST
+        headers:
+          Authorization: "Bearer {{ ntfy_token }}" # Replace 'api_token' with your token variable
+          Content-Type: "application/json" # Adjust as needed
+        body_format: raw
+        body: "{{ notification_message }}"
+        status_code: 200 # Expect a 200 OK response
+
+    - name: Display inventory hostname
+      debug:
+        msg: "{{ notification_message }}"
