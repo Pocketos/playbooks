@@ -1,7 +1,7 @@
 ---
 
 - hosts: all
-  gather_facts: false
+  gather_facts: true
   become: true
   vars:
     ntfy_server_url: "https://notify.korkscrewgaming.com" # Replace with your ntfy server URL if self-hosting
