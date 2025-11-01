@@ -11,7 +11,6 @@
   tasks:
     - ping:
     - name: Send ntfy notification
-      when: reboot_required_file.stat.exists == true
       ansible.builtin.uri:
         url: "{{ ntfy_server_url }}/{{ ntfy_topic }}"
         method: POST
