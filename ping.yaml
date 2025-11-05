@@ -15,7 +15,7 @@
       ansible.builtin.uri:
         url: "{{ server_url }}"
         method: POST
-        body_format: form_urlencoded
+        body_format: form-urlencoded
         body:
           token: "{{ token }}"
           user: "{{ user }}"
