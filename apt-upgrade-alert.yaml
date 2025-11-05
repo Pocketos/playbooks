@@ -5,6 +5,7 @@
     server_url: "https://api.pushover.net/1/messages.json" # Replace with your server URL
     token: $(pushover_token) # token secret
     user: $(pushover_user) # user secret
+    notification_title: "Updates"
     notification_message: "Updates have been applied and a reboot is necessary to complete the process on {{ ansible_hostname }} - {{ inventory_hostname }}"
   
   tasks:
@@ -36,7 +37,7 @@
         method: POST
         headers:
           token: "{{ token }}" # Replace 'api_token' with your token variable
-          user: "{{ user}}"
+          user: "{{ user }}"
           message: "{{ notification_title }}"
           Content-Type: "application/json" # Adjust as needed
         body_format: raw
