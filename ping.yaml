@@ -15,12 +15,13 @@
       ansible.builtin.uri:
         url: "{{ server_url }}"
         method: POST
-        body_format: form-urlencoded
-        body: 
-          - [ token, "{{ token }}" ] # Replace 'api_token' with your token variable
-          - [ user, "{{ user }}" ]
-          - [ message, "{{ notification_message }}" ]
+        body_format: json
+        headers:
+          token: "{{ token }}"
+          user: "{{ user }}"
+          message: "{{ notification_message }}"
         status_code: 200 # Expect a 200 OK response
+        body: 
 
     - name: Display inventory hostname
       debug:
