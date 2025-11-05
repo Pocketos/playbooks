@@ -5,8 +5,8 @@
   become: true
   vars:
     server_url: "https://api.pushover.net/1/messages.json" # Replace with your server URL
-    token: {{ pushover_token }} # token secret
-    user: {{ pushover_user }} # user secret
+    token: "{{ pushover_token }}" # token secret
+    user: "{{ pushover_user }}" # user secret
     notification_message: "Updates have been applied and a reboot is necessary to complete the process on {{ ansible_hostname }} - {{ inventory_hostname }}"
   tasks:
     - ping:
@@ -17,11 +17,11 @@
         
     - name: Send notification
       ansible.builtin.uri:
-        url: {{ server_url }}
+        url: "{{ server_url }}"
         method: POST
         body_format: form-urlencoded
         body:
-          token: {{ token }}
-          user: {{ user }}
-          message: {{ notification_message }}
+          token: "{{ token }}"
+          user: "{{ user }}"
+          message: "{{ notification_message }}"
         status_code: 200 # Expect a 200 OK response
