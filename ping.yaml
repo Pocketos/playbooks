@@ -19,9 +19,9 @@
           Content-Type: "application/json" # Adjust as needed
         body_format: form-urlencoded
         body: 
-          - [ token, {{ token }} ] # Replace 'api_token' with your token variable
-          - [ user, {{ user }} ]
-          - [ message, {{ notification_message }} ]
+          - [ token, "{{ token }}" ] # Replace 'api_token' with your token variable
+          - [ user, "{{ user }}" ]
+          - [ message, "{{ notification_message }}" ]
         status_code: 200 # Expect a 200 OK response
 
     - name: Display inventory hostname
