@@ -11,6 +11,10 @@
   tasks:
     - ping:
 
+    - name: Display inventory hostname
+      debug:
+        msg: "{{ notification_message }} {{ token }} {{ user }}"
+        
     - name: Send notification
       ansible.builtin.uri:
         url: "{{ server_url }}"
@@ -21,7 +25,3 @@
           user: "{{ user }}"
           message: "{{ notification_message }}"
         status_code: 200 # Expect a 200 OK response
-
-    - name: Display inventory hostname
-      debug:
-        msg: "{{ notification_message }}"
