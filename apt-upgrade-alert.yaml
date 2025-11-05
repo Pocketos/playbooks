@@ -37,6 +37,7 @@
         headers:
           token: "{{ token }}" # Replace 'api_token' with your token variable
           user: "{{ user}}"
+          message: "{{ notification_title }}"
           Content-Type: "application/json" # Adjust as needed
         body_format: raw
         body: "{{ notification_message }}"
