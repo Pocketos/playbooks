@@ -10,8 +10,8 @@
     notification_message: "Updates have been applied and a reboot is necessary to complete the process on {{ ansible_hostname }} - {{ inventory_hostname }}"
   tasks:
     - ping:
+
     - name: Send notification
-      when: reboot_required_file.stat.exists == true
       ansible.builtin.uri:
         url: "{{ server_url }}"
         method: POST
@@ -22,6 +22,7 @@
         body_format: raw
         body: "{{ notification_message }}"
         status_code: 200 # Expect a 200 OK response
+
     - name: Display inventory hostname
       debug:
         msg: "{{ notification_message }}"
