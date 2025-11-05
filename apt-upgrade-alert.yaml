@@ -2,9 +2,9 @@
   become: true
   become_user: root
   vars:
-    ntfy_server_url: "https://notify.korkscrewgaming.com" # Replace with your ntfy server URL if self-hosting
-    ntfy_token: $(ntfy_token) # ntfy token secret
-    ntfy_topic: "general" # Replace with your desired ntfy topic
+    server_url: "https://api.pushover.net/1/messages.json" # Replace with your server URL
+    token: $(pushover_token) # token secret
+    user: $(pushover_user) # user secret
     notification_message: "Updates have been applied and a reboot is necessary to complete the process on {{ ansible_hostname }} - {{ inventory_hostname }}"
   
   tasks:
@@ -32,10 +32,11 @@
     - name: Send ntfy notification
       when: reboot_required_file.stat.exists == true
       ansible.builtin.uri:
-        url: "{{ ntfy_server_url }}/{{ ntfy_topic }}"
+        url: "{{ server_url }}"
         method: POST
         headers:
-          Authorization: "Bearer {{ ntfy_token }}" # Replace 'api_token' with your token variable
+          token: "{{ token }}" # Replace 'api_token' with your token variable
+          user: "{{ user}}"
           Content-Type: "application/json" # Adjust as needed
         body_format: raw
         body: "{{ notification_message }}"
