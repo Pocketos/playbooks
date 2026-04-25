@@ -3,7 +3,8 @@
   become: true
   become_user: root 
   tasks:
-    - name: Run docker image prune -a
-      ansible.builtin.command:
-        cmd: docker image prune -a -f
-        warn: false
+    - name: Prune images, containers, and build cache
+      community.docker.docker_prune:
+        containers: true
+        images: true
+        builder_cache: true
