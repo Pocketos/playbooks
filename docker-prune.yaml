@@ -1,0 +1,9 @@
+- name: Prune unused Docker images
+  hosts: all
+  become: true
+  become_user: root 
+  tasks:
+    - name: Run docker image prune -a
+      ansible.builtin.command:
+        cmd: docker image prune -a -f
+        warn: false
